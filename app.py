@@ -1,8 +1,17 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import xmltodict
 import uvicorn
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Pozwala na żądania ze wszystkich źródeł (domen)
+    allow_credentials=True,  # Pozwala na przesyłanie ciasteczek (jeśli są używane)
+    allow_methods=["*"],  # Pozwala na wszystkie metody HTTP (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Pozwala na wszystkie nagłówki HTTP
+)
 
 def parse_xml_to_dict(xml_file_path):
     with open(xml_file_path, 'r', encoding="utf-8") as xml_file:
